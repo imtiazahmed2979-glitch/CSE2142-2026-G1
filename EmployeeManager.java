@@ -17,8 +17,7 @@ public class EmployeeManager {
             System.out.println("Loading data ...");
 
             try {
-                String line = readFile();
-                String[] employees = line.split(",");
+                String[] employees = readFile().split(",");
 
                 for (String employee : employees) {
                     System.out.println(employee);
@@ -35,14 +34,15 @@ public class EmployeeManager {
             System.out.println("Loading data ...");
 
             try {
-                String line = readFile();
-                System.out.println(line);
+                String[] employees = readFile().split(",");
 
-                String[] employees = line.split(",");
+                System.out.println(String.join(",", employees));
+
                 Random random = new Random();
-                int randomIndex = random.nextInt(employees.length);
 
-                System.out.println(employees[randomIndex]);
+                System.out.println(
+                    employees[random.nextInt(employees.length)]
+                );
 
             } catch (Exception exception) {
                 System.out.println("Error reading data!");
@@ -55,8 +55,7 @@ public class EmployeeManager {
             System.out.println("Loading data ...");
 
             try {
-                String name = args[0].substring(1);
-                writeFile(", " + name, true);
+                writeFile(", " + args[0].substring(1), true);
 
             } catch (Exception exception) {
                 System.out.println("Error writing data!");
@@ -69,15 +68,15 @@ public class EmployeeManager {
             System.out.println("Loading data ...");
 
             try {
-                String line = readFile();
-                String[] employees = line.split(",");
+                String[] employees = readFile().split(",");
                 String searchName = args[0].substring(1);
                 boolean found = false;
 
-                for (int i = 0; i < employees.length && !found; i++) {
-                    if (employees[i].equals(searchName)) {
+                for (String employee : employees) {
+                    if (employee.equals(searchName)) {
                         System.out.println("Employee found!");
                         found = true;
+                        break;
                     }
                 }
 
@@ -92,8 +91,7 @@ public class EmployeeManager {
             System.out.println("Loading data ...");
 
             try {
-                String line = readFile();
-                char[] characters = line.toCharArray();
+                char[] characters = readFile().toCharArray();
 
                 boolean inWord = false;
                 int count = 0;
@@ -124,8 +122,7 @@ public class EmployeeManager {
             System.out.println("Loading data ...");
 
             try {
-                String line = readFile();
-                String[] employees = line.split(",");
+                String[] employees = readFile().split(",");
                 String name = args[0].substring(1);
 
                 for (int i = 0; i < employees.length; i++) {
@@ -147,14 +144,11 @@ public class EmployeeManager {
             System.out.println("Loading data ...");
 
             try {
-                String line = readFile();
-                String[] employees = line.split(",");
-                String name = args[0].substring(1);
+                List<String> employeeList = new ArrayList<>(
+                    Arrays.asList(readFile().split(","))
+                );
 
-                List<String> employeeList =
-                    new ArrayList<>(Arrays.asList(employees));
-
-                employeeList.remove(name);
+                employeeList.remove(args[0].substring(1));
 
                 writeFile(String.join(",", employeeList), false);
 
@@ -173,10 +167,10 @@ public class EmployeeManager {
             new FileReader(Constants.FILE_NAME)
         );
 
-        String line = reader.readLine();
+        String content = reader.readLine();
         reader.close();
 
-        return line;
+        return content;
     }
 
     // Write data to file

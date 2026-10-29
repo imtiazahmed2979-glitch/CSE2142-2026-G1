@@ -12,6 +12,12 @@ public class EmployeeManager {
             return;
         }
 
+        // Check whether the argument is valid
+        if (!isValidArgument(args[0])) {
+            System.out.println("Invalid argument!");
+            return;
+        }
+
         // Load all employees
         if (args[0].equals("l")) {
             System.out.println("Loading data ...");
@@ -51,7 +57,7 @@ public class EmployeeManager {
             System.out.println("Data Loaded.");
 
         // Add a new employee
-        } else if (args[0].contains("+")) {
+        } else if (args[0].startsWith("+")) {
             System.out.println("Loading data ...");
 
             try {
@@ -64,7 +70,7 @@ public class EmployeeManager {
             System.out.println("Data Loaded.");
 
         // Search for an employee
-        } else if (args[0].contains("?")) {
+        } else if (args[0].startsWith("?")) {
             System.out.println("Loading data ...");
 
             try {
@@ -102,7 +108,7 @@ public class EmployeeManager {
             System.out.println("Data Loaded.");
 
         // Update an employee
-        } else if (args[0].contains("u")) {
+        } else if (args[0].startsWith("u")) {
             System.out.println("Loading data ...");
 
             try {
@@ -124,7 +130,7 @@ public class EmployeeManager {
             System.out.println("Data Updated.");
 
         // Delete an employee
-        } else if (args[0].contains("d")) {
+        } else if (args[0].startsWith("d")) {
             System.out.println("Loading data ...");
 
             try {
@@ -142,6 +148,26 @@ public class EmployeeManager {
 
             System.out.println("Data Deleted.");
         }
+    }
+
+    // Validate command-line argument
+    public static boolean isValidArgument(String argument) {
+
+        if (argument.equals("l")
+                || argument.equals("s")
+                || argument.equals("c")) {
+            return true;
+        }
+
+        if (argument.startsWith("+")
+                || argument.startsWith("?")
+                || argument.startsWith("u")
+                || argument.startsWith("d")) {
+
+            return argument.length() > 1;
+        }
+
+        return false;
     }
 
     // Search for an employee
@@ -182,3 +208,4 @@ public class EmployeeManager {
         writer.close();
     }
 }
+
